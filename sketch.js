@@ -29,8 +29,6 @@ function draw() {
   console.log(p.x)
   background("black");
   move()
-  spawnCircles()
-  spawnXs()
   if(p.isTouching(cGroup)) {
     cGroup[0].destroy()
     score +=1
@@ -39,6 +37,8 @@ function draw() {
     oGroup[0].destroy()
     lives -=1
   }
+  spawnCircles()
+  spawnXs()
   if(lives <= 0) {
     p.destroy()
     cGroup.destroyEach()
