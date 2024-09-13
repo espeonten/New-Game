@@ -2,8 +2,10 @@ var p, pI;
 var circle, circleI;
 var obstacle;
 var x, xI;
+var ccS;
+var gameOverS;
 var score = 0;
-var lives = 10;
+var lives = 1;
 var cGroup;
 var oGroup;
 
@@ -12,6 +14,10 @@ function preload() {
 
   circleI = loadImage("circle.png")
   xI = loadImage("x.png")
+
+  ccs = loadSound("circleCollect.mp3")
+
+  gameOverS = loadSound("gameOver.mp3")
 }
 
 function setup() {
@@ -31,6 +37,7 @@ function draw() {
   move()
   if(p.isTouching(cGroup)) {
     cGroup[0].destroy()
+    ccs.play()
     score +=1
   }
   if(p.isTouching(oGroup)) {
@@ -43,6 +50,8 @@ function draw() {
     p.destroy()
     cGroup.destroyEach()
     oGroup.destroyEach()
+    gameOverS.play()
+    gameOverS.setLoop(false)
     fill("white")
     textSize(50)
     text("You died! You collected: " + score + " circles!", width / 2 - 300, height / 2)
