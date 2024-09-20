@@ -5,7 +5,7 @@ var x, xI;
 var ccS;
 var gameOverS;
 var score = 0;
-var lives = 1;
+var lives = 10, livesDisplay = 10;
 var cGroup;
 var oGroup;
 
@@ -43,25 +43,35 @@ function draw() {
   if(p.isTouching(oGroup)) {
     oGroup[0].destroy()
     lives -=1
+    livesDisplay -=1
   }
   spawnCircles()
   spawnXs()
-  if(lives <= 0) {
+  if(lives == 0) {
     p.destroy()
     cGroup.destroyEach()
     oGroup.destroyEach()
-    gameOverS.play()
-    gameOverS.setLoop(false)
     fill("white")
     textSize(50)
     text("You died! You collected: " + score + " circles!", width / 2 - 300, height / 2)
+    gameOverS.play()
+    lives = -1
+    livesDisplay = 0
+  }
+  else if(lives == -1) {
+    cGroup.destroyEach()
+    oGroup.destroyEach()
+    fill("white")
+    textSize(50)
+    text("You died! You collected: " + score + " circles!", width / 2 - 300, height / 2)
+    livesDisplay = 0
   }
   drawSprites()
   fill("cyan")
   textSize(25)
   text("Circles collected: "+ score, 20, 30)
   fill("orange")
-  text("Lives: " + lives, 250, 30)
+  text("Lives: " + livesDisplay, 250, 30)
 }
 
 function spawnCircles() {
